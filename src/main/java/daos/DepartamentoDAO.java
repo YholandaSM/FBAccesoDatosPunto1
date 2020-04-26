@@ -18,5 +18,7 @@ public interface DepartamentoDAO {
     public Departamento consultarDep(int deptno);
 
     public ArrayList listarDep();
+    
+   
 
 }

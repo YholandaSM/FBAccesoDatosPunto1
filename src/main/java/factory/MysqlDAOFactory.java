@@ -37,8 +37,8 @@ public class MysqlDAOFactory extends DAOFactory {
             try {
                 conexion = DriverManager.getConnection(URLDB, USUARIO, CLAVE);
             } catch (SQLException e) {
-
                 System.out.println("Error " + e.getMessage() + "-" + e.getSQLState());
+                conexion=null;
             }
 
         }
@@ -48,6 +48,17 @@ public class MysqlDAOFactory extends DAOFactory {
     @Override
     public DepartamentoDAO getDepartamentoDAO() {
         return new MysqlDepartamentoImpl();
+    }
+
+    public static void cerrarConexion() {
+        if (conexion != null) {
+            try {
+                conexion.close();
+                conexion = null;
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
+            }
+        }
     }
 
 }

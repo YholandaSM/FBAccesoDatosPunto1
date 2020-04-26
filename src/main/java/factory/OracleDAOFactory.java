@@ -6,8 +6,8 @@
 package factory;
 
 import daos.DepartamentoDAO;
- 
-import implementaciones.departamento.MysqlDepartamentoImpl;
+
+import implementaciones.departamento.OracleDepartamentoImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -40,9 +40,12 @@ public class OracleDAOFactory extends DAOFactory {
 
             try {
                 conexion = DriverManager.getConnection("jdbc:oracle:thin:1521:XE", "ejemplo", "ejemplo");
+
             } catch (SQLException e) {
 
                 System.out.println("Error " + e.getMessage() + "-" + e.getSQLState());
+                conexion = null;
+
             }
 
         }
@@ -51,9 +54,18 @@ public class OracleDAOFactory extends DAOFactory {
 
     @Override
     public DepartamentoDAO getDepartamentoDAO() {
-        return new MysqlDepartamentoImpl();
+        return new OracleDepartamentoImpl();
     }
 
-   
+    public static void cerrarConexion() {
+        if (conexion != null) {
+            try {
+                conexion.close();
+                conexion = null;
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
+            }
+        }
+    }
 
 }

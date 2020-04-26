@@ -43,6 +43,11 @@ public class Departamento implements Serializable{
     public void setLoc(String loc) {
         this.loc = loc;
     }
+
+    @Override
+    public String toString() {
+        return "DEPARTAMENTO-->" + "deptno=" + deptno + ", dnombre=" + dnombre + ", loc=" + loc + '}';
+    }
     
     
 }
